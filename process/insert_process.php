@@ -11,8 +11,6 @@
                           'date' => mysqli_real_escape_string($con, $_POST['date'])
     );
 
-    var_dump($insertProcess);
-    
     $sql = "insert into information
             (info_name,info_division,info_cate,info_guest,info_title,info_content,info_date,info_view)
             VALUES
@@ -25,11 +23,7 @@
     $result = mysqli_query($con, $sql);
     
     /* 파일저장 */
-    echo "<br>";
-    print_r($_FILES['file_input']);
     $dir = '../upload_file/';
-
-    echo empty($_POST['file_output']);
 
     if($_FILES['file_input']['error'] == 0){
         $tmp_name = $_FILES['file_input']['tmp_name'];
@@ -39,7 +33,7 @@
     
     if($result === FALSE){
         echo "insert 실패";
-    }elseif ($_FILES['file_input']['error'] != 0){
+    }elseif ($_FILES['file_input']['error'] != 0 && empty($_POST['file_output']) == 0){
         echo "파일 저장에 문제가 발생했습니다.";
     }else{
        header('Location: ../list.php');
