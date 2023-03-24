@@ -1,0 +1,144 @@
+#LS {
+	background-color: #F5F5F5;
+	width: 1146px;
+	height:3cm;
+	margin: auto;
+	border: 2px solid;
+	display: flex;
+	align-items: center;
+	margin-top: 1cm;	
+	border-color: gray;
+	font-size: 5.5mm;
+	justify-content: center;
+}
+#LS input{
+	border: 2px solid;
+	border-color: gray;
+	width: 5.3cm;
+	height: 1.1cm;
+	font-size: 6mm;
+}
+#LS>span{
+	padding-left: 2mm;
+	padding-right: 2mm;
+}
+#LS button[type=submit]{
+	border: 1px solid;
+	margin-left: 5mm;
+	border-radius: 5px;
+	width: 20mm;
+	height: 12mm; 
+	font-size: 4.4mm;
+	color: #4c4c4c;
+	border-color: gray;
+	background-color: #D0CECE;
+	margin-right: 2mm;
+	padding-right: 15mm;
+	padding-left: 4mm;
+}
+#LS button[type=submit]:hover , #move_page button[type=button]:hover{
+	cursor: pointer;
+}
+#check_page{
+	width: 1150px;
+	margin: auto;
+ 	height: 15mm;
+  	display:flex;
+    align-items: flex-end;
+    font-weight: bold;
+}
+#LP{
+	margin: auto;
+	border-collapse: collapse;
+	margin-top: 3mm;
+	width: 1150px;
+}
+h1	{
+	text-align: left;
+	font-size: 15mm; 
+	font-weight: normal;
+	margin-bottom: 1mm;
+}
+#LS input[type=date] , #LS input[type=date]:before{
+	width: 5.3cm;
+	font-size: x-large;
+	
+}
+table,th,td{
+    border: 1px solid;
+}
+.border_title{
+	text-align: left;
+	width: 40%;
+	padding-left: 2mm;
+	cursor: pointer;
+}
+.border_title:hover{
+	color: red;
+	border-color: gray;
+}
+.border_other{
+	text-align: center;
+	height: 1cm;
+}
+th{
+	height: 1cm;
+	background-color: #DEEBF7;
+}
+td:nth-child(1),td:nth-child(6){
+	padding-left: 11mm;
+	padding-right: 11mm;
+	}
+td:nth-child(2){
+	padding-left: 4mm;
+	padding-right: 4mm;
+	width: 2cm;
+	}
+td:nth-child(5),td:nth-child(7) {
+	padding-left: 8mm;
+	padding-right: 8mm;
+}
+td:nth-child(4) img{
+	padding-left: 9mm;
+	padding-right: 9mm;
+	width: 6mm;
+}
+
+#move_page, #move_page a{
+	width: 1150px;
+	margin: auto;
+	margin-top: 6mm;
+	text-align: center;
+	text-decoration: none;
+}
+#move_page input[type="button"]{
+	background-color: white;
+	border: 1px solid;
+	border-color: gray;
+	border-radius: 3px;
+	width: 10mm;
+	height: 10mm;
+	font-size: 5mm;
+	margin-left: 2mm;
+}
+#move_page input[type="button"]:hover{
+	background-color: #DEEBF7;
+	cursor: pointer;
+}
+#move_page button[type=button]{
+	border: 1px solid;
+	margin-left: 5mm;
+	border-radius: 5px;
+	width: 20mm;
+	height: 12mm; 
+	font-size: 4.4mm;
+	color: #4c4c4c;
+	border-color: gray;
+	background-color: #D0CECE;
+	margin-right: 7.5px;
+	padding-right: 15mm;
+	padding-left: 4mm;
+}
+#move_page button[type=button]:active , #LS button[type=submit]:active {
+	box-shadow: 1px 1px;
+}

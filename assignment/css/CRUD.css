@@ -1,0 +1,113 @@
+h1	{
+	text-align: left;
+	font-size: 15mm; 
+	font-weight: normal;
+	margin-bottom: 1mm;
+}
+#insert_form{
+	width: 1150px;
+	margin: auto;
+	margin-top: 1cm;
+}
+#input_area {
+	width: 1150px;
+	border: 1px solid;
+	border-collapse: collapse;
+	
+}
+tr,td {
+	border: 1px solid;
+}
+tr {
+	height: 14mm;
+}
+td:nth-child(1) {
+	width: 40mm;
+	text-align: center;
+	background-color: #DEEBF7;
+	font-weight: bold;
+}
+td:nth-child(2) {
+	padding-left: 4mm;
+}
+td select{
+	height: 1cm;
+	font-size: 5mm;
+	color: gray;
+	width: 5cm;
+	padding-left: 2mm;
+}
+tr:nth-child(2) input[type=text] {
+	height: 10mm;
+	border: 2px solid gray;
+	width: 11cm;
+}
+tr:nth-child(5) input[type=text] {
+	height: 10mm;
+	border: 2px solid gray;
+	width: 98%;
+}
+tr:nth-child(7) input[type=text] {
+	height: 10mm;
+	border: 2px solid gray;
+	width: 6cm;
+}
+input[type=text]{
+	font-size: 18px;
+}
+input[type=radio] , input[type=checkbox]{
+	border: expression()
+}
+#td6 {
+	resize: none;
+	width: 98%;
+	height: 8cm;
+	margin: 4mm 0mm 4mm 0mm;
+	border: 2px solid gray;
+	font-size: 18px;
+}
+#attach_input{
+	height: 15mm;
+}
+#attach_input input[type=text]{
+	background-color: white;
+}
+#attach_input input[type=file]{
+		display: none;
+}
+#attach_input label{
+	border: 1px solid;
+	margin-left: 3mm;
+	border-radius: 5px;
+	font-size: 4.4mm;
+	color: #4c4c4c;
+	border-color: gray;
+	background-color: #D0CECE;
+	padding-right: 4mm;
+	padding-left: 4mm;
+	padding-top: 2mm;
+	padding-bottom: 2mm;
+	cursor: pointer;
+	display: inline-block;
+}
+#attach_input label:active, button[type=button]:active , button[type=submit]:active{
+	box-shadow: 1px 1px;
+}
+button[type=button] , button[type=submit]{
+	border: 1px solid;
+	border-radius: 5px;
+	margin-top : 4mm;
+	width: 20mm;
+	height: 12mm;
+	font-size: 4.4mm;
+	color: #4c4c4c;
+	border-color: gray;
+	background-color: #D0CECE;
+	padding-right: 15mm;
+	padding-left: 4mm;
+	margin-left: 2mm;
+}
+input[type=radio] , input[type=checkbox]{
+	accent-color: #4c4c4c;
+	background-color: #4c4c4c;
+}

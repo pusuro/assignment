@@ -1,0 +1,6 @@
+jsp problem https://velog.io/@kmdngmn/JSP-JSTL-%EB%B9%A8%EA%B0%84-%EC%A4%84-%EC%97%90%EB%9F%AC
+maven error 메이븐프로젝트 업데이트
+
+잔바리 오류
+롬복 설치 (이클립스 경로에다)
+빌드패스 - add Libray - web app Libray - 해당 프로젝트명
