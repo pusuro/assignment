@@ -11,7 +11,24 @@
     	
     	<form action="process/insert_process.php" method="POST" enctype="multipart/form-data">
 
+<?php 
+    $con = mysqli_connect("localhost","assignment","assignment1","assignment");
+    $max_num_query = mysqli_query($con, "select MAX(info_num)+1 from information");
+    
+    foreach ($max_num_query as $max_num);
+	
+    if(empty($max_num['MAX(info_num)+1'])){
+?>
+				<input type="hidden" name="num" value="1">
+<?php 
+    }elseif (!empty($max_num['MAX(info_num)+1'])){
+?>
+				<input type="hidden" name="num" value="<?=$max_num['MAX(info_num)+1']?>">
+<?php 
+    }
+?>	
 				<input type="hidden" name="date" value="<?=date("Y-m-d") ?>">
+
         	<div id="insert_form">
         		<table id="input_area">
         			<tr>

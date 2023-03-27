@@ -111,7 +111,7 @@ td:nth-child(4) img{
 	text-align: center;
 	text-decoration: none;
 }
-#move_page input[type="button"]{
+#move_page input[type="button"] , input[type="submit"]{
 	background-color: white;
 	border: 1px solid;
 	border-color: gray;
@@ -121,7 +121,7 @@ td:nth-child(4) img{
 	font-size: 5mm;
 	margin-left: 2mm;
 }
-#move_page input[type="button"]:hover{
+#move_page input[type="button"]:hover , input[type="submit"]:hover {
 	background-color: #DEEBF7;
 	cursor: pointer;
 }
@@ -139,6 +139,6 @@ td:nth-child(4) img{
 	padding-right: 15mm;
 	padding-left: 4mm;
 }
-#move_page button[type=button]:active , #LS button[type=submit]:active {
+#move_page button[type=button]:active , #LS button[type=submit]:active{
 	box-shadow: 1px 1px;
 }

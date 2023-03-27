@@ -3,9 +3,17 @@
     require_once 'process/con_query_function.php';
 
     $list_num = $_GET['list_num'];
-    
-    $read_query = con_query("select * from information where info_num = '$list_num'");
-    
+
+    $read_query = con_query("SELECT *
+                                FROM 
+                                	information
+                                	INNER join
+                                	file_manager
+                                	ON
+                                	information.info_num = file_manager.num
+                                WHERE
+                                	info_num = '$list_num'");
+
     $read_val = mysqli_fetch_assoc($read_query);
 ?>
 
@@ -19,7 +27,7 @@
 
     	<h1>조회</h1>
     	<hr>
-    	
+
     	<div id="insert_form">
     		<table id="input_area">
     			<tr>
@@ -50,7 +58,7 @@
     			<tr>
     				<td>첨부파일</td>
     				<td id="attach_input">
-    					<span>db 연결 후 받아오는값</span>
+    					<span><?=$read_val['file_name'] ?></span>
     					<input id="file_display" type="file" value="찾아보기">
     					<label for="file_display">다운로드</label>
     				</td>

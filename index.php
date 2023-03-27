@@ -1,10 +1,12 @@
 <?php 
     /* header('Location: list.php'); */    
 
-    phpinfo()
+    
+
 ?>
 
 <html>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<body>
 		<h1>실행</h1>
 
@@ -14,5 +16,18 @@
 			<input type="file">
 			<input type="submit">
 		</form>
+
+<script type="text/javascript">
+$(function(){
+	alert("로딩완료")
+
+
+
+});
+
+
+
+</script>
+
 
 </html>

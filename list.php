@@ -2,9 +2,10 @@
 /* con_query 함수, connect($con)가 있어서 쿼리문만 입력하면 됨 */
 require_once 'process/con_query_function.php';
 
-$result = con_query('SELECT * FROM information order by info_num desc');
+/* $result = con_query('SELECT * FROM information order by info_num desc'); */
 
-echo "<br><br>";
+$result = con_query('SELECT * FROM information ORDER BY info_num desc LIMIT 10');
+
 ?>
 
 <html>
@@ -20,6 +21,27 @@ echo "<br><br>";
 
 <?php
 
+    $search_title = $_GET['search_title'] ?? '';
+    $search_name = $_GET['search_name'] ?? '';
+    $search_date_fir = $_GET['search_date_fir'] ?? '';
+    $search_date_sec = $_GET['search_date_sec'] ?? '';
+
+    $order_by = 'ORDER BY info_num DESC';
+    
+    
+    /* $order_by = 'ORDER BY info_num DESC';
+
+    $search_title_query = empty($search_title) ? '' : con_query("SELECT * FROM information WHERE info_title LIKE CONCAT('%','$search_title','%') $order_by;");
+    $search_name_query = empty($search_name) ? '' : con_query("SELECT * FROM information WHERE info_name LIKE CONCAT('%','$search_name','%') $order_by;");
+    
+    $search_dual_query = empty($search_title) || empty($search_name) ? '' : con_query("SELECT * FROM information WHERE info_title LIKE CONCAT('%','$search_title','%') and info_name LIKE CONCAT('%','$search_name','%') $order_by;");
+    
+    $search_quad_query = empty($search_title) || empty($search_name) || empty($search_date_fir) || empty($search_date_sec) ? '' : con_query("SELECT * FROM information WHERE info_title LIKE CONCAT('%','$search_title','%') and info_name LIKE CONCAT('%','$search_name','%') and info_date >= '$search_date_fir' AND info_date <= '$search_date_sec' $order_by;");
+    
+    $search_date_query = empty($search_date_fir) || empty($search_date_sec) ? '' : con_query("SELECT * FROM information WHERE info_date >= '$search_date_fir' AND info_date <= '$search_date_sec' $order_by;");
+        
+    ?> */
+    
     /* 제목 으로 검색할때 빈값 확인하여 반환 */
     if(empty($_GET['search_title'])){
         $search_title = '';
@@ -93,14 +115,14 @@ echo "<br><br>";
 			</tr>
 <?php
     /* 게시글이 없는 경우 */
-    $check_list = con_query("select info_num from information");
+    $check_list_query = con_query("select info_num from information");
     
-    $aaaaa = mysqli_fetch_assoc($check_list);
+    $check_list = mysqli_fetch_assoc($check_list_query);
     
-    if(empty($aaaaa['info_num'])){
+    if(empty($check_list['info_num'])){
 ?>
         <tr>
-        <td colspan="7" style="text-align: center; height: 1cm;">표시할 자료가 없습니다.</td>
+        <td colspan="7" style="text-align: center; height: 1cm;">표시할 게시글이 없습니다.</td>
         </tr>
 <?php
     }
@@ -273,16 +295,19 @@ echo "<br><br>";
 				<a href="#">
 					<input type="button" value=" < ">
 				</a>
-			</span>		
-				<?php 
-				    for ($i = 1; $i < $page_num+1; $i++) {
+			</span>	
+			<form action="" method="GET" style="display: inline-block;">
+				<?php
+				if(mysqli_num_rows($paging_query_result) == 0){
+				    $page_num = 1;
+				}
+				    for ($i = 1; $i <= $page_num; $i++) {
 				        echo '<span>';
-    				        echo '<a href="#">';
-    	   			          echo '<input type="button" value="'.$i.'">';
-	   		  	            echo "<a>";
+    				        echo '<input type="submit" id="'.'page'.$i.'" value="'.$i.'">';
 				        echo '</span>';
 				    }
 				?>
+			</form>
 			<span>
 				<a href="#">
 					<input type="button" value=" > ">
