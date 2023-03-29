@@ -2,9 +2,7 @@
 /* con_query 함수, connect($con)가 있어서 쿼리문만 입력하면 됨 */
 require_once 'process/con_query_function.php';
 
-/* $result = con_query('SELECT * FROM information order by info_num desc'); */
-
-$result = con_query('SELECT * FROM information ORDER BY info_num desc LIMIT 10');
+/* $result = con_query('SELECT * FROM information ORDER BY info_num desc LIMIT 10'); */
 
 ?>
 
@@ -23,68 +21,24 @@ $result = con_query('SELECT * FROM information ORDER BY info_num desc LIMIT 10')
 
     $search_title = $_GET['search_title'] ?? '';
     $search_name = $_GET['search_name'] ?? '';
-    $search_date_fir = $_GET['search_date_fir'] ?? '';
-    $search_date_sec = $_GET['search_date_sec'] ?? '';
+    $fir_date = $_GET['search_date_fir'] ?? '';
+    $sec_date = $_GET['search_date_sec'] ?? '';
 
     $order_by = 'ORDER BY info_num DESC';
-    
-    
-    /* $order_by = 'ORDER BY info_num DESC';
 
-    $search_title_query = empty($search_title) ? '' : con_query("SELECT * FROM information WHERE info_title LIKE CONCAT('%','$search_title','%') $order_by;");
-    $search_name_query = empty($search_name) ? '' : con_query("SELECT * FROM information WHERE info_name LIKE CONCAT('%','$search_name','%') $order_by;");
-    
-    $search_dual_query = empty($search_title) || empty($search_name) ? '' : con_query("SELECT * FROM information WHERE info_title LIKE CONCAT('%','$search_title','%') and info_name LIKE CONCAT('%','$search_name','%') $order_by;");
-    
-    $search_quad_query = empty($search_title) || empty($search_name) || empty($search_date_fir) || empty($search_date_sec) ? '' : con_query("SELECT * FROM information WHERE info_title LIKE CONCAT('%','$search_title','%') and info_name LIKE CONCAT('%','$search_name','%') and info_date >= '$search_date_fir' AND info_date <= '$search_date_sec' $order_by;");
-    
-    $search_date_query = empty($search_date_fir) || empty($search_date_sec) ? '' : con_query("SELECT * FROM information WHERE info_date >= '$search_date_fir' AND info_date <= '$search_date_sec' $order_by;");
-        
-    ?> */
-    
-    /* 제목 으로 검색할때 빈값 확인하여 반환 */
-    if(empty($_GET['search_title'])){
-        $search_title = '';
-    }elseif (!empty($_GET['search_title'])){
-        $search_title = $_GET['search_title'];
-        $search_title_query = con_query("SELECT * FROM information WHERE info_title LIKE CONCAT('%','$search_title','%') ORDER BY info_num DESC;");
-    }
+    $nomal_query = empty($search_title) && empty($search_name) && empty($fir_date) && empty($sec_date) ? con_query("select * from information $order_by LIMIT 10") : '' ;
 
-    /* 작성자 로 검색할때 빈값 확인하여 반환 */
-    if(empty($_GET['search_name'])){
-        $search_name = '';
-    }elseif(!empty($_GET['search_name'])){
-        $search_name = $_GET['search_name'];
-        $search_name_query = con_query("SELECT * FROM information WHERE info_name LIKE CONCAT('%','$search_name','%') ORDER BY info_num DESC;");
-    }
-
-    /* 제목과 작성자 조건으로 검색했을때*/
-    if(!empty($_GET['search_title']) && !empty($_GET['search_name']) && empty($_GET['search_date_fir']) && empty($_GET['search_date_sec'])){
-        $search_title = $_GET['search_title'];
-        $search_name = $_GET['search_name'];
-        $search_dual_query = con_query("SELECT * FROM information WHERE info_title LIKE CONCAT('%','$search_title','%') and info_name LIKE CONCAT('%','$search_name','%') ORDER BY info_num DESC;");
-    }
-
-    /* 제목 작성자 작성일 조건으로 검색했을때 */
-    if (!empty($_GET['search_title']) && !empty($_GET['search_name']) && !empty($_GET['search_date_fir']) && !empty($_GET['search_date_sec'])){
-        $search_title = $_GET['search_title'];
-        $search_name = $_GET['search_name'];
-        $search_date_fir = $_GET['search_date_fir'];
-        $search_date_sec = $_GET['search_date_sec'];
-        $search_quad_query = con_query("SELECT * FROM information WHERE info_title LIKE CONCAT('%','$search_title','%') and info_name LIKE CONCAT('%','$search_name','%') and info_date >= '$search_date_fir' AND info_date <= '$search_date_sec' ORDER BY info_num DESC;");
-    }
-
-    /* 날짜 조건으로 검색 */
-    if(empty($_GET['search_date_fir']) && empty($_GET['search_date_sec'])){
-        $search_date_fir = '';
-        $search_date_sec = '';
-    }elseif(!empty($_GET['search_date_fir']) && !empty($_GET['search_date_sec'])){
-        $search_date_fir = $_GET['search_date_fir'];
-        $search_date_sec = $_GET['search_date_sec'];
-        $search_date_query = con_query("SELECT * FROM information WHERE info_date >= '$search_date_fir' AND info_date <= '$search_date_sec' ORDER BY info_num DESC;");
-    }
+    $search_title_query = empty($search_title) ? '' : con_query("SELECT * FROM information WHERE info_title LIKE CONCAT('%','$search_title','%') $order_by");
     
-?>
+    $search_name_query = empty($search_name) ? '' : con_query("SELECT * FROM information WHERE info_title LIKE CONCAT('%','$search_name','%') $order_by");
+    
+    $search_date_query = empty($fir_date) && empty($sec_date) ? '' : con_query("SELECT * FROM information WHERE info_date >= '$fir_date' AND info_date <= '$sec_date' $order_by;");
+    
+    $search_dual_query = empty($search_title) && empty($search_name) ? '' : con_query("SELECT * FROM information WHERE info_title LIKE CONCAT('%','$search_title','%') and info_name LIKE CONCAT('%','$search_name','%') $order_by;");
+    
+    $search_quad_query = empty($search_title) && empty($search_name) && empty($fir_date) && empty($sec_date) ? '' : con_query("SELECT * FROM information WHERE info_title LIKE CONCAT('%','$search_title','%') and info_name LIKE CONCAT('%','$search_name','%') and info_date >= '$fir_date' AND info_date <= '$sec_date' $order_by;");
+    
+    ?>
 		<form action="" method="get">
         	<div id="LS">
         		<span>제목</span> <input type="text" name="search_title">
@@ -95,8 +49,9 @@ $result = con_query('SELECT * FROM information ORDER BY info_num desc LIMIT 10')
         	</div>
         </form>
 <?php
+
     /* 글 갯수와 페이지 갯수 변수 */
-    $numCount = con_query('SELECT info_num as infonum FROM information');
+    $numCount = con_query('SELECT info_num FROM information');
     $numCount_val = mysqli_num_rows($numCount);
 ?>
     	<div id="check_page">
@@ -120,161 +75,45 @@ $result = con_query('SELECT * FROM information ORDER BY info_num desc LIMIT 10')
     $check_list = mysqli_fetch_assoc($check_list_query);
     
     if(empty($check_list['info_num'])){
-?>
-        <tr>
-        <td colspan="7" style="text-align: center; height: 1cm;">표시할 게시글이 없습니다.</td>
-        </tr>
-<?php
+       echo '<tr>';
+       echo '<td colspan="7" style="text-align: center; height: 1cm;">표시할 게시글이 없습니다.</td>';
+       echo '</tr>';
     }
-    /* 제목 , 작성자 , 작성일 에 값이 없는 경우 */
-    if(empty($search_title) && empty($search_name) && empty($search_date_fir) && empty($search_date_sec)){
-        while ($nomal_result = mysqli_fetch_assoc($result)){
-            
-            $border_val = array(
-                'num' => htmlspecialchars($nomal_result['info_num']),
-                'division' => htmlspecialchars($nomal_result['info_division']),
-                'title' => htmlspecialchars($nomal_result['info_title']),
-                'date' => htmlspecialchars($nomal_result['info_date']),  
-                'name' => htmlspecialchars($nomal_result['info_name']),
-                'view' => htmlspecialchars($nomal_result['info_view']),
-                'division' => htmlspecialchars($nomal_result['info_division'])
-                );
-?>
-			<tr>
-				<td class="border_other"><?=$border_val['num'] ?></td>
-				<td class="border_other"><?=$border_val['division'] ?></td>
-				<td class="border_title"><a href="read.php?list_num=<?=$border_val['num']?>"><?=$border_val['title'] ?></a></td>
-				<td class="border_other"><img src="img/yesFile.png"></td>
-				<td class="border_other"><?=$border_val['date'] ?></td>
-				<td class="border_other"><?=$border_val['name'] ?></td>
-				<td class="border_other"><?=$border_val['view'] ?></td>
-			</tr>
-<?php
-        }
-    /* 제목에 값이 있고 작성자와 작성일에 값이 없는 경우 */
-    }elseif (!empty($_GET['search_title']) && empty($_GET['search_name']) && empty($_GET['search_date_fir']) && empty($_GET['search_date_sec'])){
-        while($search_title_result = mysqli_fetch_assoc($search_title_query)){
-            
-            $search_title_val = array(
-                'search_title_num' => htmlspecialchars($search_title_result['info_num']),
-                'search_title_division' => htmlspecialchars($search_title_result['info_division']),
-                'search_title_title' => htmlspecialchars($search_title_result['info_title']),
-                'search_title_date' => htmlspecialchars($search_title_result['info_date']),
-                'search_title_name' => htmlspecialchars($search_title_result['info_name']),
-                'search_title_view' => htmlspecialchars($search_title_result['info_view']),
-            );
-?>          
-            <tr>
-                <td class="border_other"><?=$search_title_val['search_title_num'] ?></td>
-                <td class="border_other"><?=$search_title_val['search_title_division'] ?></td>
-                <td class="border_title"><?=$search_title_val['search_title_title'] ?></td>
-                <td class="border_other"><img src="img/yesFile.png"> </td>
-                <td class="border_other"><?=$search_title_val['search_title_date'] ?></td>
-                <td class="border_other"><?=$search_title_val['search_title_name'] ?></td>
-                <td class="border_other"><?=$search_title_val['search_title_view'] ?></td>
-            </tr>
-<?php
-        }
-    /* 작성자에 값이 있고 제목과 작성일에 값이 없는 경우 */    
-    }elseif (!empty($_GET['search_name']) && empty($_GET['search_title']) && empty($_GET['search_date_fir']) && empty($_GET['search_date_sec'])){
-        while($search_name_result = mysqli_fetch_assoc($search_name_query)){
-            
-            $search_name_val = array(
-                'search_name_num' => htmlspecialchars($search_name_result['info_num']),
-                'search_name_division' => htmlspecialchars($search_name_result['info_division']),
-                'search_name_title' => htmlspecialchars($search_name_result['info_title']),
-                'search_name_date' => htmlspecialchars($search_name_result['info_date']),
-                'search_name_name' => htmlspecialchars($search_name_result['info_name']),
-                'search_name_view' => htmlspecialchars($search_name_result['info_view']),
-            );
-?>
-            <tr>
-                <td class="border_other"><?=$search_name_val['search_name_num'] ?></td>
-                <td class="border_other"><?=$search_name_val['search_name_division'] ?></td>
-                <td class="border_title"><?=$search_name_val['search_name_title'] ?></td>
-                <td class="border_other"><img src="img/yesFile.png"> </td>
-                <td class="border_other"><?=$search_name_val['search_name_date'] ?></td>
-                <td class="border_other"><?=$search_name_val['search_name_name'] ?></td>
-                <td class="border_other"><?=$search_name_val['search_name_view'] ?></td>
-            </tr>
-<?php
-        }
-    /* 제목, 작성자 값이 있고 날짜 값이 없는 경우 */
-    }elseif (!empty($_GET['search_title']) && !empty($_GET['search_name']) && empty($_GET['search_date_fir']) && empty($_GET['search_date_sec'])){
-        while($search_dual_result = mysqli_fetch_assoc($search_dual_query)){
-            
-            $search_dual_val = array(
-                'search_dual_num' => htmlspecialchars($search_dual_result['info_num']),
-                'search_dual_division' => htmlspecialchars($search_dual_result['info_division']),
-                'search_dual_title' => htmlspecialchars($search_dual_result['info_title']),
-                'search_dual_date' => htmlspecialchars($search_dual_result['info_date']),
-                'search_dual_name' => htmlspecialchars($search_dual_result['info_name']),
-                'search_dual_view' => htmlspecialchars($search_dual_result['info_view']),
-            );
-?>
-            <tr>
-                <td class="border_other"><?=$search_dual_val['search_dual_num'] ?></td>
-                <td class="border_other"><?=$search_dual_val['search_dual_division'] ?></td>
-                <td class="border_title"><?=$search_dual_val['search_dual_title'] ?></td>
-                <td class="border_other"><img src="img/yesFile.png"> </td>
-                <td class="border_other"><?=$search_dual_val['search_dual_date'] ?></td>
-                <td class="border_other"><?=$search_dual_val['search_dual_name'] ?></td>
-                <td class="border_other"><?=$search_dual_val['search_dual_view'] ?></td>
-            </tr>
-<?php
-        }
-    /* 작성일 값이 있고 제목 작성자 값이 없는 경우 */
-    }elseif (!empty($_GET['search_date_fir']) && !empty($_GET['search_date_sec']) && empty($_GET['search_title']) && empty($_GET['search_name'])){
-        while($search_date_result = mysqli_fetch_assoc($search_date_query)){
-            
-            $search_date_val = array(
-                'search_date_num' => htmlspecialchars($search_date_result['info_num']),
-                'search_date_division' => htmlspecialchars($search_date_result['info_division']),
-                'search_date_title' => htmlspecialchars($search_date_result['info_title']),
-                'search_date_date' => htmlspecialchars($search_date_result['info_date']),
-                'search_date_name' => htmlspecialchars($search_date_result['info_name']),
-                'search_date_view' => htmlspecialchars($search_date_result['info_view']),
-            );
-?>
-			<tr>
-                <td class="border_other"><?=$search_date_val['search_date_num'] ?></td>
-                <td class="border_other"><?=$search_date_val['search_date_division'] ?></td>
-                <td class="border_title"><?=$search_date_val['search_date_title'] ?></td>
-                <td class="border_other"><img src="img/yesFile.png"> </td>
-                <td class="border_other"><?=$search_date_val['search_date_date'] ?></td>
-                <td class="border_other"><?=$search_date_val['search_date_name'] ?></td>
-                <td class="border_other"><?=$search_date_val['search_date_view'] ?></td>
-            </tr>
-<?php
-        }
-    /* 제목 작성자 날짜에 값이 있는 경우 */
-    }elseif (!empty($_GET['search_title']) && !empty($_GET['search_name']) && !empty($_GET['search_date_fir']) && !empty($_GET['search_date_sec'])){
-        while($search_quad_result = mysqli_fetch_assoc($search_quad_query)){
-            
-            $search_quad_val = array(
-                'search_quad_num' => htmlspecialchars($search_quad_result['info_num']),
-                'search_quad_division' => htmlspecialchars($search_quad_result['info_division']),
-                'search_quad_title' => htmlspecialchars($search_quad_result['info_title']),
-                'search_quad_date' => htmlspecialchars($search_quad_result['info_date']),
-                'search_quad_name' => htmlspecialchars($search_quad_result['info_name']),
-                'search_quad_view' => htmlspecialchars($search_quad_result['info_view']),
-            );
-?>
-			<tr>
-                <td class="border_other"><?=$search_quad_val['search_quad_num'] ?></td>
-                <td class="border_other"><?=$search_quad_val['search_quad_division'] ?></td>
-                <td class="border_title"><?=$search_quad_val['search_quad_title'] ?></td>
-                <td class="border_other"><img src="img/yesFile.png"> </td>
-                <td class="border_other"><?=$search_quad_val['search_quad_date'] ?></td>
-                <td class="border_other"><?=$search_quad_val['search_quad_name'] ?></td>
-                <td class="border_other"><?=$search_quad_val['search_quad_view'] ?></td>
-            </tr>
-<?php 
-        }
+    
+    function img_check($get_img) {
+        
+        
+        ;
     }
-?>
-		</table>
-<?php 
+    
+    /* 빈값을 확인하여 검색 쿼리 적용 */
+    $search_query_select = '';
+    if(!empty($nomal_query)){
+        $search_query_select = $nomal_query;
+    }elseif (!empty($search_title_query)){
+        $search_query_select = $search_title_query;
+    }elseif(!empty($search_name_query)){
+        $search_query_select = $search_name_query;
+    }elseif (!empty($search_date_query)){
+        $search_query_select = $search_date_query;
+    }elseif ($search_dual_query){
+        $search_query_select = $search_dual_query;
+    }elseif ($search_quad_query){
+        $search_query_select = $search_quad_query;
+    }
+    while($row = mysqli_fetch_row($search_query_select)){
+    
+        echo '<tr>';
+        echo '<td class="border_other">'.$row[0].'</td>';
+        echo '<td class="border_other">'.$row[2].'</td>';
+        echo '<td class="border_title">'.$row[5].'</td>';
+        echo '<td class="border_other"><img src="img/yesFile.png"></td>';
+        echo '<td class="border_other">'.$row[7].'</td>';
+        echo '<td class="border_other">'.$row[1].'</td>';
+        echo '<td class="border_other">'.$row[8].'</td>';
+        echo '</tr>';
+    }
+    
     /* 페이징 작업 */
     $paging_query_result = con_query('select * from information');
     
@@ -285,6 +124,7 @@ $result = con_query('SELECT * FROM information ORDER BY info_num desc LIMIT 10')
     echo '<br>';
     echo $page_num;
 ?>
+		</table>
 		<div id="move_page">
 			<span>
 				<a href="#">
@@ -295,7 +135,7 @@ $result = con_query('SELECT * FROM information ORDER BY info_num desc LIMIT 10')
 				<a href="#">
 					<input type="button" value=" < ">
 				</a>
-			</span>	
+			</span>
 			<form action="" method="GET" style="display: inline-block;">
 				<?php
 				if(mysqli_num_rows($paging_query_result) == 0){

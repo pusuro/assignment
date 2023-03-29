@@ -8,7 +8,7 @@
 	
     	<h1>등록</h1>
 		<hr>
-    	
+	
     	<form action="process/insert_process.php" method="POST" enctype="multipart/form-data">
 
 <?php 

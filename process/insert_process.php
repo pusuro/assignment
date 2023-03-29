@@ -31,19 +31,21 @@
                       'file_size' => mysqli_real_escape_string($con, $_FILES['file_input']['size'])
     );
     
-    $file_sql = "INSERT INTO file_manager
-                (num,file_name,file_size,file_date)
-                VALUES
-                ('{$file_save['num']}','{$file_save['file_name']}','{$file_save['file_size']}',NOW())";
-
-    mysqli_query($con, $file_sql);
-
-    $dir = '../upload_file/';
-
-    if($_FILES['file_input']['error'] == 0){
-        $tmp_name = $_FILES['file_input']['tmp_name'];
-        $name = $_FILES['file_input']['name'];
-        move_uploaded_file($tmp_name, $dir.$name);
+    if(!empty($_FILES['file_input']['name'])){
+        $file_sql = "INSERT INTO file_manager
+                    (num,file_name,file_size,file_date)
+                    VALUES
+                    ('{$file_save['num']}','{$file_save['file_name']}','{$file_save['file_size']}',NOW())";
+    
+        mysqli_query($con, $file_sql);
+    
+        $dir = '../upload_file/';
+    
+        if($_FILES['file_input']['error'] == 0){
+            $tmp_name = $_FILES['file_input']['tmp_name'];
+            $name = $_FILES['file_input']['name'];
+            move_uploaded_file($tmp_name, $dir.$name);
+        }
     }
 
     if($result === FALSE){
