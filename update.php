@@ -1,12 +1,29 @@
 <?php 
-    $con = mysqli_connect("localhost","assignment","assignment1","assignment");
+    $mysql_host = "127.0.0.1";
+    $mysql_db = "assignment";
+    $mysql_id = "assignment";
+    $mysql_pw = "assignment1";
+    
+    $con = mysqli_connect($mysql_host,$mysql_id,$mysql_pw,$mysql_db);
 
     $update_num = $_POST['update_num'];
     
-    $info_query = mysqli_query($con,"select * from information where info_num = $update_num");
+    $info_query = mysqli_query($con,"SELECT *
+                            FROM
+                                information
+                                LEFT JOIN
+                                file_manager
+                                ON
+                                    information.info_num = file_manager.num
+                            WHERE
+                                file_manager.num = $update_num
+                                OR
+                                information.info_num = $update_num
+                                and
+                                file_manager.num IS NULL ");
     
     $load_val = mysqli_fetch_assoc($info_query);
-    
+
     ?>
 
 <html>
@@ -76,7 +93,7 @@
     			<tr>
     				<td>첨부파일</td>
     				<td id="attach_input">
-    					<input type="text" disabled>
+    					<input type="text" value="<?=$load_val['file_name'] ?>" disabled>
     					<input id="file_display" type="file" value="찾아보기">
     					<label for="file_display">찾아보기</label>
     				</td>

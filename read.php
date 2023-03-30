@@ -5,16 +5,20 @@
     $list_num = $_GET['list_num'];
 
     $read_query = con_query("SELECT *
-                                FROM 
-                                	information
-                                	INNER join
-                                	file_manager
-                                	ON
-                                	information.info_num = file_manager.num
-                                WHERE
-                                	info_num = '$list_num'");
-
-    $read_val = mysqli_fetch_assoc($read_query);
+                            FROM
+                                information
+                                LEFT JOIN
+                                file_manager
+                                ON
+                                    information.info_num = file_manager.num
+                            WHERE
+                                file_manager.num = $list_num
+                                OR
+                                information.info_num = $list_num
+                                and
+                                file_manager.num IS NULL ");
+    
+    $read_val = mysqli_fetch_array($read_query);
 ?>
 
 <html>
@@ -58,7 +62,9 @@
     			<tr>
     				<td>첨부파일</td>
     				<td id="attach_input">
-    					<span><?=$read_val['file_name'] ?></span>
+    					<span><?php if(empty($read_val['file_name'])) {
+                               echo "첨부된 파일이 없습니다.";
+    					            }else{ echo $read_val['file_name']; } ?></span>
     					<input id="file_display" type="file" value="찾아보기">
     					<label for="file_display">다운로드</label>
     				</td>

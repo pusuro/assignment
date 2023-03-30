@@ -33,7 +33,7 @@
     }elseif (!empty($search_title_query)){
         $search_query_select = $search_title_query;
     }
-    while($row = mysqli_fetch_row($search_query_select)){
+    while($row = mysqli_fetch_array($search_query_select)){
             
             echo "<tr>";
             echo "<td>$row[0]</td>";
@@ -41,6 +41,11 @@
             echo "<td>$row[2]</td>";
             echo "<td>$row[3]</td>";
             echo "</tr>";
+            
+            echo "<br>";
+            var_dump($row[0]);
+            $asdf = con_query("SELECT file_name	FROM file_manager WHERE	num = '".$row['info_num']."'");
+            var_dump(mysqli_fetch_assoc($asdf));
     }
 ?>
     </table>
@@ -56,7 +61,6 @@
         	</div>
         </form>
 
-
 <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<body>
 		<h1>실행</h1>
@@ -68,14 +72,24 @@
 			<input type="submit">
 		</form>
 
+
+			<input type="text" id="ajax">
+			<input type="button" id="event">
+		
 <script type="text/javascript">
 $(function(){
 	/* alert("로딩완료") */
 
-
+	$('#event').click(function(){
+		var dd = document.getElementById('ajax').value
+		alert(dd);
+		$.ajax({
+			url : 
+		
+		});
+	});
 
 });
-
 
 
 </script>

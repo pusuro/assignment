@@ -1,5 +1,10 @@
 <?php 
-    $con = mysqli_connect("localhost","assignment","assignment1","assignment");
+    $mysql_host = "127.0.0.1";
+    $mysql_db = "assignment";
+    $mysql_id = "assignment";
+    $mysql_pw = "assignment1";
+
+    $con = mysqli_connect($mysql_host,$mysql_id,$mysql_pw,$mysql_db);
     
     $insertProcess = array(
                           'num' => mysqli_real_escape_string($con, $_POST['num']),

@@ -2,8 +2,6 @@
 /* con_query 함수, connect($con)가 있어서 쿼리문만 입력하면 됨 */
 require_once 'process/con_query_function.php';
 
-/* $result = con_query('SELECT * FROM information ORDER BY info_num desc LIMIT 10'); */
-
 ?>
 
 <html>
@@ -23,9 +21,9 @@ require_once 'process/con_query_function.php';
     $search_name = $_GET['search_name'] ?? '';
     $fir_date = $_GET['search_date_fir'] ?? '';
     $sec_date = $_GET['search_date_sec'] ?? '';
-
+    
     $order_by = 'ORDER BY info_num DESC';
-
+    
     $nomal_query = empty($search_title) && empty($search_name) && empty($fir_date) && empty($sec_date) ? con_query("select * from information $order_by LIMIT 10") : '' ;
 
     $search_title_query = empty($search_title) ? '' : con_query("SELECT * FROM information WHERE info_title LIKE CONCAT('%','$search_title','%') $order_by");
@@ -80,12 +78,6 @@ require_once 'process/con_query_function.php';
        echo '</tr>';
     }
     
-    function img_check($get_img) {
-        
-        
-        ;
-    }
-    
     /* 빈값을 확인하여 검색 쿼리 적용 */
     $search_query_select = '';
     if(!empty($nomal_query)){
@@ -101,28 +93,27 @@ require_once 'process/con_query_function.php';
     }elseif ($search_quad_query){
         $search_query_select = $search_quad_query;
     }
-    while($row = mysqli_fetch_row($search_query_select)){
+    
+    while($row = mysqli_fetch_array($search_query_select)){
     
         echo '<tr>';
         echo '<td class="border_other">'.$row[0].'</td>';
         echo '<td class="border_other">'.$row[2].'</td>';
-        echo '<td class="border_title">'.$row[5].'</td>';
-        echo '<td class="border_other"><img src="img/yesFile.png"></td>';
+        echo '<td class="border_title"><a href="read.php?list_num='.$row['0'].'">'.$row[5].'</a></td>';
+
+        /* 해당 게시글에 파일이 있는 경우 이미지 생성 */
+        $file_check = con_query("select file_name from file_manager where num='".$row['info_num']."'");
+        
+        if(mysqli_fetch_assoc($file_check) != NULL){
+            echo '<td class="border_other"><img src="img/yesFile.png"></td>';
+        }else
+            echo '<td class="border_other"></td>';
         echo '<td class="border_other">'.$row[7].'</td>';
         echo '<td class="border_other">'.$row[1].'</td>';
         echo '<td class="border_other">'.$row[8].'</td>';
         echo '</tr>';
     }
-    
-    /* 페이징 작업 */
-    $paging_query_result = con_query('select * from information');
-    
-    echo mysqli_num_rows($paging_query_result);
-    
-    /* 한 페이지에 10개씩 출력하면 페이지가 얼마나 나오는지 */
-    $page_num = ceil(mysqli_num_rows($paging_query_result) / 10);
-    echo '<br>';
-    echo $page_num;
+	
 ?>
 		</table>
 		<div id="move_page">
@@ -136,18 +127,44 @@ require_once 'process/con_query_function.php';
 					<input type="button" value=" < ">
 				</a>
 			</span>
-			<form action="" method="GET" style="display: inline-block;">
 				<?php
-				if(mysqli_num_rows($paging_query_result) == 0){
-				    $page_num = 1;
-				}
-				    for ($i = 1; $i <= $page_num; $i++) {
+				
+				/* 페이징 작업 */
+				$page = isset($_GET['page']) ? $_GET['page'] : 1; // 기본값 1
+				$count_per_page = 10;
+				
+				/* 게시글 갯수 */
+				$total_count_query = con_query("SELECT COUNT(*) FROM information");
+				$total_count_array = mysqli_fetch_array($total_count_query);
+				$total_count = $total_count_array[0];
+				
+				$total_page = ceil($total_count / $count_per_page);
+				
+				$start = ($page - 1) * $count_per_page; // 페이지의 시작 인덱스
+				$result_query = con_query("SELECT * FROM information ORDER BY info_num DESC LIMIT $start, $count_per_page");
+				
+				for ($i = 1; $i <= $total_page; $i++) {
 				        echo '<span>';
-    				        echo '<input type="submit" id="'.'page'.$i.'" value="'.$i.'">';
+				        echo '<input type="submit" id="page'.$i.'" value="'.$i.'" onclick="location.href=\'list.php?page='.$i.'\'">';
 				        echo '</span>';
 				    }
-				?>
-			</form>
+				    
+				    while ($roww = mysqli_fetch_array($result_query)) {
+				        $id = $roww[0];
+				        $title = $roww[2];
+				        $content = $roww[1];
+				        $author = $roww[3];
+				        $created_at = $roww[4];
+				        echo "<table>";
+			            echo "<tr>";
+				        echo "<td>$id</td>";
+				        echo "<td>$title</td>";
+				        echo "<td>$content</td>";
+			            echo "</tr>";
+				        echo "</table>";
+				    }
+				    
+                ?>
 			<span>
 				<a href="#">
 					<input type="button" value=" > ">
