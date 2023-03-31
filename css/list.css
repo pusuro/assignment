@@ -113,7 +113,7 @@ td:nth-child(4) img{
 	text-align: center;
 	text-decoration: none;
 }
-#move_page input[type="button"] , input[type="submit"]{
+#move_page input[type="button"] , #move_page input[type="submit"] , #move_page a{
 	background-color: white;
 	border: 1px solid;
 	border-color: gray;
@@ -122,6 +122,7 @@ td:nth-child(4) img{
 	height: 10mm;
 	font-size: 5mm;
 	margin-left: 2mm;
+	display: inline-block;
 }
 #move_page input[type="button"]:hover , input[type="submit"]:hover {
 	background-color: #DEEBF7;

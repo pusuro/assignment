@@ -21,7 +21,7 @@
                                 information.info_num = $update_num
                                 and
                                 file_manager.num IS NULL ");
-    
+
     $load_val = mysqli_fetch_assoc($info_query);
 
     ?>
