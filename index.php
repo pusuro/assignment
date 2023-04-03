@@ -93,6 +93,14 @@ $(function(){
 
 
 </script>
-
+<?php 
+    $target_dir = "./upload_file";
+    $name = "/README.txt";
+    
+    $size = $target_dir.$name;
+    
+    echo filesize($size);    
+    
+?>
 
 </html>

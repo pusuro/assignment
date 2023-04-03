@@ -5,7 +5,7 @@
     $mysql_pw = "assignment1";
 
     $con = mysqli_connect($mysql_host,$mysql_id,$mysql_pw,$mysql_db);
-    
+
     $insertProcess = array(
                           'num' => mysqli_real_escape_string($con, $_POST['num']),
                           'name' => mysqli_real_escape_string($con, $_POST['name']),

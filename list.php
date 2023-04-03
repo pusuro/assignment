@@ -50,13 +50,13 @@ require_once 'process/paging.php';
         </form>
 <?php
 
-    /* 글 갯수와 페이지 갯수 변수 , 게시글이 없는 경우(73라인) 쿼리 */
+    /* 글 갯수와 페이지 갯수 변수 , 게시글이 없는 경우(74라인) 쿼리 */
     $numCount = con_query('SELECT info_num FROM information');
     $numCount_val = mysqli_num_rows($numCount);
 ?>
     	<div id="check_page">
 			<span>Total : <?= $numCount_val ?></span>
-			<span>&nbsp Page : 1/2</span>
+			<span>&nbsp Page : <?php echo $now_page."/".$total_page?></span>
 		</div>
 		<table id="LP">
 			<tr>
@@ -69,7 +69,6 @@ require_once 'process/paging.php';
 				<th>조회수</th>
 			</tr>
 <?php
-    /* 게시글이 없는 경우 */
     /* $check_list_query = con_query('SELECT info_num FROM information') */
     $check_list = mysqli_fetch_assoc($numCount);
 
@@ -125,12 +124,10 @@ require_once 'process/paging.php';
 				<a href="#"> < </a>
 			</span>
 				<?php
-				
-				for ($i = 1; $i <= $total_page; $i++) {
-				    echo '<span>';
-/* 				    echo '<input type="submit" id="page'.$i.'" value="'.$i.'" onclick="location.href=\'list.php?list_page='.$i.'&?search_title='.$search_title.'&?search_name='.$search_name.'&?search_date_fir='.$fir_date.'&?search_date_sec='.$sec_date.'\'">'; */
-				    echo '<a href=\'list.php?list_page='.$i.'&?search_title='.$search_title.'&?search_name='.$search_name.'&?search_date_fir='.$fir_date.'&?search_date_sec='.$sec_date.'\'" id="page'.$i.'">'.$i.'</a>';
-				    echo '</span>';
+    				for ($i = 1; $i <= $total_page; $i++) {
+    				    echo '<span>';
+    				    echo '<a href=\'list.php?list_page='.$i.'&?search_title='.$search_title.'&?search_name='.$search_name.'&?search_date_fir='.$fir_date.'&?search_date_sec='.$sec_date.'\'" id="page'.$i.'">'.$i.'</a>';
+    				    echo '</span>';
 				}
                 ?>
 			<span>
