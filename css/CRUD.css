@@ -75,7 +75,7 @@ input[type=radio] , input[type=checkbox]{
 #attach_input input[type=file]{
 		display: none;
 }
-#attach_input label{
+#attach_input label , #file_delete {
 	border: 1px solid;
 	margin-left: 3mm;
 	border-radius: 5px;

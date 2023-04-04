@@ -107,71 +107,13 @@
         
        	<script type="text/javascript">
     		$(document).ready(function(){
-    		
-    	/* 아이디의 value를 가져오는 함수 */	
-        		function GetVal(GV){
-        			return document.getElementById(GV).value;
-        		}
-        		
-        /* (필수)값 체크  */
-    	       		$('#save').click(function(){
-    	       			var td1Val = GetVal('td1');
-	    /* 구분 체크 */
-    	       			if(td1Val != '유지보수' && td1Val != '문의사항'){
-    	       				alert("구분을 선택해 주세요.");
-    	       				return false;
-    	       			}
-    	/* 작성자 체크 */
-	       				var td2Val = GetVal('td2');
-	       				if(td2Val == undefined || td2Val == null || td2Val == ''){
-	       					alert("작성자는 필수 입니다.");
-	       					return false;
-	       				}
-	    /* 분류 체크 */
-	     				var td3Val = $('input[name=td3]:checked').val();
-	     				if(td3Val == undefined || td3Val == null || td3Val == ''){
-	     					alert("분류를 골라 주세요.")
-	     					return false;
-	     				}
-	    /* 고객 유형 체크 */
-	    				
-	    				var td4Val = $('input[name=td4]:checked').val();
-	    				if(td4Val == undefined || td4Val == null || td4Val == ''){
-	     					alert("유형을 체크 해주세요.")
-	     					return false;
-	    				}
-	   	/* 제목 체크 */
-	       				var td5Val = GetVal('td5');
-	       				if(td5Val == undefined || td5Val == null || td5Val == ''){
-	       					alert("제목은 필수 입니다.");
-	       					return false;
-	       				}
-		/* 내용 체크 */	    
-	       				var td6Val = GetVal('td6');
-	       				if(td6Val == undefined || td6Val == null || td6Val == ''){
-	       					alert("내용은 필수 입니다.");
-	       					return false;
-	       				}
-	       				
-	       				$(location).attr("href","read.php");
-       	    		})
-        				
-    	/* 구분(필수) 선택 시 글씨 색상 변경 */
-        			$("#td1").change(function(){
-        				$(this).css("color","black");
-        			})
-    		
-    	/* 첨부파일 이름 옆 input에 넣기 */
-    				$('#file_input').change(function(){
-    					var fileInput = $('#file_input').val();
-    					$('#file_output').val(fileInput);
-    					
-    					var fileOutput = $('input[name=file_output]').val();
-    					fileOutput = fileOutput.replace("C:\\fakepath\\","")
-    					alert(fileOutput);
-						$('input[name=file_output]').val(fileOutput);
-    				})
-    		})
+	    		/* 첨부파일 이름 옆 input에 넣기 */
+          		$('#file_input').change(function(){
+                	var fileInput = $(this).val().replace("C:\\fakepath\\","");
+                	$('#file_output').val(fileInput);
+                	alert(fileInput);
+              	});
+            });
     	</script>
 	</body>
 </html>

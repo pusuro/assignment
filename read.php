@@ -78,7 +78,7 @@
 					<input type="hidden" name="update_num" value="<?=$read_val['info_num']?>">
 					<button type="submit">수정</button>
 				</form>
-				<form action="process/delete_process.php" method="POST" style="display: inline-block;">
+				<form action="process/delete_process.php" method="POST" onsubmit="if(!confirm('삭제 하시겠습니까?')){return false;}" style="display: inline-block;">
 					<input type="hidden" name="info_num" value="<?=$read_val['info_num']?>">
 					<button type="submit">삭제</button>
 				</form>
