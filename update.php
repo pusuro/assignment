@@ -97,15 +97,17 @@
             					<input type="text" id="file_output" name="file_output" disabled>
             					<input id="file_display" type="file" name="file_display" value="찾아보기">
             					<label for="file_display">찾아보기</label>
-            				    <?php echo '<span style="margin-left : 8mm">'.$load_val['file_name'].'</span>';
+            				    <?php 
             				    if(isset($load_val['file_name'])){
+        				           echo '<span id="file_name" style="margin-left : 8mm">'.$load_val['file_name'].'</span>';
             					   echo '<input type="button" id="file_delete" value="삭제">';
             				    }
             					?>
+            					
             				</td>
         				</tr>
         		</table>
-    		
+
     			<div style="float: right;">
     					<input type="hidden" name="update_num" value="<?=$load_val['info_num']?>">
     					<button id="save" type="submit" >저장</button>
@@ -122,21 +124,23 @@
     	        	$('#file_output').val(fileDisplay);
         	    	alert(fileDisplay);
               	});
-
+		
               	$('#file_delete').click(function(){
-          			alert("버튼 클릭했습니다.")
-          			var test = $('#td2').val();
-          			
+          			var file_name = document.getElementById('file_name').innerHTML;
+
           			$.ajax({
           					url : "./process/ajax_test.php",
           					type : "POST",
-          					success : function(result){
-          						alert(result);
-          					}
-          			})
+          					data : {file_name : file_name},
+                            success: function(result) {
+                                console.log(result);
+                            },
+                            error: function(xhr, status, error) {
+                                console.log(error);
+                            }
+          			});
               	});
    	 		});
-   	 		
     	</script>
 	</body>
 </html>
