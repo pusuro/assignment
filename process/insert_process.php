@@ -26,7 +26,7 @@
              '{$insertProcess['content']}','{$insertProcess['date']}',
               0)";
 
-    $result = mysqli_query($con, $sql);
+    $insert_query = mysqli_query($con, $sql);
 
     /* 파일저장 */
 
@@ -53,7 +53,7 @@
         }
     }
 
-    if($result === FALSE){
+    if($insert_query === FALSE){
         echo "insert 실패";
     }elseif ($_FILES['file_input']['error'] != 0 && empty($_POST['file_output']) == 0){
         echo "파일 저장에 문제가 발생했습니다.";

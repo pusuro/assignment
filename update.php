@@ -1,14 +1,9 @@
 <?php 
-    $mysql_host = "127.0.0.1";
-    $mysql_db = "assignment";
-    $mysql_id = "assignment";
-    $mysql_pw = "assignment1";
-
-    $con = mysqli_connect($mysql_host,$mysql_id,$mysql_pw,$mysql_db);
+    require_once 'process/con_query_function.php';
 
     $update_num = $_POST['update_num'];
 
-    $info_query = mysqli_query($con,"SELECT *
+    $info_query = con_query("SELECT *
                             FROM
                                 information
                                 LEFT JOIN
@@ -39,7 +34,7 @@
     	<hr>
 	
     	<div id="insert_form">
-			<form action="./process/update_process.php" method="post" style="display: inline-block;">
+			<form action="./process/update_process.php" method="post" enctype="multipart/form-data" style="display: inline-block;">
         		<table id="input_area">
             			<tr>
             				<td>구분</td>
@@ -103,7 +98,6 @@
             					   echo '<input type="button" id="file_delete" value="삭제">';
             				    }
             					?>
-            					
             				</td>
         				</tr>
         		</table>
@@ -117,28 +111,30 @@
     	</div>
     	
     	<script type="text/javascript">
-    		/* 첨부파일 이름 옆 input에 넣기 */
 	    	$(function(){
+	    		/* 첨부파일 이름 옆 input에 넣기 */
           		$('#file_display').change(function(){
 	            	var fileDisplay = $(this).val().replace("C:\\fakepath\\","");
     	        	$('#file_output').val(fileDisplay);
         	    	alert(fileDisplay);
               	});
 		
+				/* 첨부파일 삭제 ajax */
               	$('#file_delete').click(function(){
           			var file_name = document.getElementById('file_name').innerHTML;
-
-          			$.ajax({
-          					url : "./process/ajax_test.php",
-          					type : "POST",
-          					data : {file_name : file_name},
-                            success: function(result) {
-                                console.log(result);
-                            },
-                            error: function(xhr, status, error) {
-                                console.log(error);
-                            }
-          			});
+          			
+          			if(confirm("\"확인\" 버튼을 누르면 삭제가 진행됩니다.")){
+              			$.ajax({
+              					url : "./process/up_file_delete.php",
+              					type : "POST",
+              					data : {file_name : file_name},
+                                success: function(result) {
+                                    alert(result);
+                                    $('#file_name').hide();
+                                    $('#file_delete').hide();
+                                }
+              			});
+              		}
               	});
    	 		});
     	</script>

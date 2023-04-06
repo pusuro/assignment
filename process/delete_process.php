@@ -9,8 +9,7 @@
     $info_num = $_POST['info_num'];
     
     $info_delete = mysqli_query($con, "delete from file_manager where num = $info_num;");
-    var_dump($info_delete);
-    if($info_delete == true){
+    if($info_delete){
         mysqli_query($con, "DELETE FROM information WHERE info_num = $info_num;");
         header('Location: ../list.php');
     }

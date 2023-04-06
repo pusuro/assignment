@@ -67,8 +67,12 @@
     					            }else{ echo $read_val['file_name']; } ?></span>
     					<form action="./process/download_file.php" method="get" style="display: inline-block; margin-bottom: inherit;">
     						<input type="hidden" name="download_num" value="<?=$read_val['info_num']?>">
-        					<input id="file_download" type="submit" style="display: none;">
-        					<label for="file_download">다운로드</label>
+    						<?php
+    						if(!empty($read_val['file_name'])){
+            					echo '<input id="file_download" type="submit" style="display: none;">';
+            					echo '<label for="file_download">다운로드</label>';
+    						}
+    						?>
         				</form>
     				</td>
     		</table>
