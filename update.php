@@ -112,6 +112,7 @@
     	
     	<script type="text/javascript">
 	    	$(function(){
+	    	
 	    		/* 첨부파일 이름 옆 input에 넣기 */
           		$('#file_display').change(function(){
 	            	var fileDisplay = $(this).val().replace("C:\\fakepath\\","");

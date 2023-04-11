@@ -116,19 +116,7 @@ require_once 'process/paging.php';
 <?php
         /* $check_list_query = con_query('SELECT info_num FROM information') */
         $check_list = mysqli_fetch_assoc($numCount);
-    
-        if(empty($check_list['info_num'])){
-           echo '<tr>';
-           echo '<td colspan="7" style="text-align: center; height: 1cm;">표시할 게시글이 없습니다.</td>';
-           echo '</tr>';
-        }
-        
-        
-        if ($search_query_select != $nomal_query && $search_query_select->num_rows == 0 ) {
-            echo '<tr>';
-            echo '<td colspan="7" style="text-align: center; height: 1cm;">검색 결과가 없습니다.</td>';
-            echo '</tr>';
-        }
+
         
         /* $result_query = con_query("SELECT * FROM information ORDER BY info_num DESC LIMIT $start, $count_per_page"); */
     
@@ -147,6 +135,19 @@ require_once 'process/paging.php';
                 echo '<td class="border_other">'.$border_list[7].'</td>';
                 echo '<td class="border_other">'.$border_list[1].'</td>';
                 echo '<td class="border_other">'.$border_list[8].'</td>';
+            echo '</tr>';
+        }
+        
+        if(empty($check_list['info_num'])){
+            echo '<tr>';
+            echo '<td colspan="7" style="text-align: center; height: 1cm;">표시할 게시글이 없습니다.</td>';
+            echo '</tr>';
+        }
+        
+        
+        if ($search_query_select != $nomal_query && $search_query_select->num_rows == 0 ) {
+            echo '<tr>';
+            echo '<td colspan="7" style="text-align: center; height: 1cm;">검색 결과가 없습니다.</td>';
             echo '</tr>';
         }
 ?>
