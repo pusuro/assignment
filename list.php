@@ -153,13 +153,8 @@ require_once 'process/paging.php';
 ?>
 		</table>
 		<div id="move_page">
-			<span>
-				<a href="#"> << </a>
-			</span>
-			<span>
-				<a href="#"> < </a>
-			</span>
 				<?php
+				
 				$now_page = isset($_GET['list_page']) ? $_GET['list_page'] : 1; // 기본값 1
 				$count_per_page = 10;
 
@@ -171,16 +166,26 @@ require_once 'process/paging.php';
 
 				$start = ($now_page - 1) * $count_per_page; // 페이지의 시작 인덱스
 
+				echo '<span>';
+				echo '<a href="list.php?list_page=1&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> << </a>';
+				echo '</span>';
+				
+				echo '<span>';
+				echo '<a href="list.php?list_page='.($now_page - 1).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> < </a>';
+				echo '</span>';
+				
 				for ($i = 1; $i <= $total_page; $i++) {
 				    echo '<span>';
 				    echo '<a href=\'list.php?list_page='.$i.'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'\'" id="page'.$i.'">'.$i.'</a>';
 				    echo '</span>';
 				}
-				
+				echo '<span>';
+				echo '<a href="list.php?list_page='.($now_page + 1).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> > </a>';
+				echo '</span>';
                 ?>
-			<span>
-				<a href="#"> > </a>
-			</span>
+            <span>
+                <a href='list.php?list_page=<?php echo $now_page + 1 ?>&search_title=<?php echo $search_title ?>&search_name=<?php echo $search_name ?>&search_date_fir=<?php echo $fir_date ?>&search_date_sec=<?php echo $sec_date ?>'"> > </a>
+            </span>
 			<span>
 				<a href="#"> >> </a>
 			</span>
