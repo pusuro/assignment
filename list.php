@@ -138,16 +138,9 @@ require_once 'process/paging.php';
             echo '</tr>';
         }
         
-        if(empty($check_list['info_num'])){
+        if ($search_query_select != $nomal_query && $search_query_select->num_rows == 0 || empty($check_list['info_num'])) {
             echo '<tr>';
             echo '<td colspan="7" style="text-align: center; height: 1cm;">표시할 게시글이 없습니다.</td>';
-            echo '</tr>';
-        }
-        
-        
-        if ($search_query_select != $nomal_query && $search_query_select->num_rows == 0 ) {
-            echo '<tr>';
-            echo '<td colspan="7" style="text-align: center; height: 1cm;">검색 결과가 없습니다.</td>';
             echo '</tr>';
         }
 ?>
@@ -169,9 +162,12 @@ require_once 'process/paging.php';
 				echo '<span>';
 				echo '<a href="list.php?list_page=1&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> << </a>';
 				echo '</span>';
-				
 				echo '<span>';
-				echo '<a href="list.php?list_page='.($now_page - 1).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> < </a>';
+				if($now_page == 1){
+				    echo '<a href="list.php?list_page='.($now_page).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> < </a>';
+				}else{
+				    echo '<a href="list.php?list_page='.($now_page - 1).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> < </a>';
+				}
 				echo '</span>';
 				
 				for ($i = 1; $i <= $total_page; $i++) {
@@ -180,15 +176,16 @@ require_once 'process/paging.php';
 				    echo '</span>';
 				}
 				echo '<span>';
-				echo '<a href="list.php?list_page='.($now_page + 1).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> > </a>';
+				if($now_page != $total_page){
+    				echo '<a href="list.php?list_page='.($now_page + 1).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> > </a>';
+				}else{
+	       			echo '<a href="list.php?list_page='.($now_page).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> > </a>';
+				}
+				echo '</span>';
+				echo '<span>';
+				echo '<a href="list.php?list_page='.($total_page).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> >> </a>';
 				echo '</span>';
                 ?>
-            <span>
-                <a href='list.php?list_page=<?php echo $now_page + 1 ?>&search_title=<?php echo $search_title ?>&search_name=<?php echo $search_name ?>&search_date_fir=<?php echo $fir_date ?>&search_date_sec=<?php echo $sec_date ?>'"> > </a>
-            </span>
-			<span>
-				<a href="#"> >> </a>
-			</span>
 			<div style="float: right;">
 				<button type="button" onclick="location.href='insert.php'">등록</button>
 			</div>
