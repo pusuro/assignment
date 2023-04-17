@@ -95,12 +95,21 @@ require_once 'process/paging.php';
            default:
                $where_clause = "";
         }
-        
+
         $numCount = con_query("$select_from $where_clause $order_by");
         $numCount_val = mysqli_num_rows($numCount);
 ?>
     	<div id="check_page">
 			<span>Total : <?= $numCount_val ?></span>
+
+<?php
+        if($total_count_array[0] == 0){
+            $now_page = 0;
+        }else {
+            $now_page = isset($_GET['list_page']) ? $_GET['list_page'] : 1;
+        }
+?>
+			
 			<span>&nbsp Page : <?php echo $now_page."/".$total_page?></span>
 		</div>
 		<table id="LP">
@@ -116,7 +125,6 @@ require_once 'process/paging.php';
 <?php
         /* $check_list_query = con_query('SELECT info_num FROM information') */
         $check_list = mysqli_fetch_assoc($numCount);
-
         
         /* $result_query = con_query("SELECT * FROM information ORDER BY info_num DESC LIMIT $start, $count_per_page"); */
     
@@ -147,17 +155,6 @@ require_once 'process/paging.php';
 		</table>
 		<div id="move_page">
 				<?php
-				
-				$now_page = isset($_GET['list_page']) ? $_GET['list_page'] : 1; // 기본값 1
-				$count_per_page = 10;
-
-				/* $total_count_query = con_query("SELECT COUNT(*) FROM information");
-				$total_count_array = mysqli_fetch_array($total_count_query); */
-				mysqli_num_rows($numCount);
-				$total_count = mysqli_num_rows($numCount);
-				$total_page = ceil($total_count / $count_per_page);
-
-				$start = ($now_page - 1) * $count_per_page; // 페이지의 시작 인덱스
 
 				echo '<span>';
 				echo '<a href="list.php?list_page=1&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> << </a>';
@@ -170,10 +167,16 @@ require_once 'process/paging.php';
 				}
 				echo '</span>';
 				
-				for ($i = 1; $i <= $total_page; $i++) {
-				    echo '<span>';
-				    echo '<a href=\'list.php?list_page='.$i.'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'\'" id="page'.$i.'">'.$i.'</a>';
-				    echo '</span>';
+				if($total_count < 1){
+    				    echo '<span>';
+    				    echo '<a href="">1</a>';
+    				    echo '</span>';
+				}else{
+				    for ($i = 1; $i <= $total_page; $i++) {
+    				    echo '<span>';
+    				    echo '<a href=\'list.php?list_page='.$i.'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'\'" id="page'.$i.'">'.$i.'</a>';
+    				    echo '</span>';
+    				}
 				}
 				echo '<span>';
 				if($now_page != $total_page){
