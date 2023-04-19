@@ -75,7 +75,7 @@ require_once 'process/paging.php';
         	</div>
         </form>
 <?php
-        
+    
         switch ($search_query_select) {
            case $search_quad_query:
                $where_clause = "WHERE info_title LIKE CONCAT('%','$search_title','%') and info_name LIKE CONCAT('%','$search_name','%') and info_date >= '$fir_date' AND info_date <= '$sec_date'";
@@ -95,21 +95,25 @@ require_once 'process/paging.php';
            default:
                $where_clause = "";
         }
-
-        $numCount = con_query("$select_from $where_clause $order_by");
-        $numCount_val = mysqli_num_rows($numCount);
+        
+        $query_execute = con_query("$select_from $where_clause $order_by");
+        $numCount_val = mysqli_num_rows($query_execute);
 ?>
     	<div id="check_page">
 			<span>Total : <?= $numCount_val ?></span>
+		
+<?php   
+        
+        /* 검색결과 페이지를 카운트 하기 위함 , $query_execute 변수를 받아야 하여 따로 분리함 */
+        $total_count = mysqli_num_rows($query_execute);
+        $total_page = ceil($total_count / $count_per_page);
 
-<?php
-        if($total_count_array[0] == 0){
+        if($numCount_val == 0){
             $now_page = 0;
         }else {
             $now_page = isset($_GET['list_page']) ? $_GET['list_page'] : 1;
         }
 ?>
-			
 			<span>&nbsp Page : <?php echo $now_page."/".$total_page?></span>
 		</div>
 		<table id="LP">
@@ -124,7 +128,7 @@ require_once 'process/paging.php';
 			</tr>
 <?php
         /* $check_list_query = con_query('SELECT info_num FROM information') */
-        $check_list = mysqli_fetch_assoc($numCount);
+        $check_list = mysqli_fetch_assoc($query_execute);
         
         /* $result_query = con_query("SELECT * FROM information ORDER BY info_num DESC LIMIT $start, $count_per_page"); */
     
@@ -135,11 +139,14 @@ require_once 'process/paging.php';
             echo '<td class="border_other">'.$border_list[2].'</td>';
             echo '<td class="border_title"><a href="read.php?list_num='.$border_list['0'].'">'.$border_list[5].'</a></td>';
             
+            /* 해당 게시물 번호에 파일이 저장돼있을시 첨부 열에 파일 이미지 표시 */
             $file_check = con_query("select file_name from file_manager where num='".$border_list['info_num']."'");
+            
             if(mysqli_fetch_assoc($file_check) != NULL){
                 echo '<td class="border_other"><img src="img/yesFile.png"></td>';
-            }else
+            }else{
                 echo '<td class="border_other"></td>';
+            }
                 echo '<td class="border_other">'.$border_list[7].'</td>';
                 echo '<td class="border_other">'.$border_list[1].'</td>';
                 echo '<td class="border_other">'.$border_list[8].'</td>';
@@ -155,7 +162,7 @@ require_once 'process/paging.php';
 		</table>
 		<div id="move_page">
 				<?php
-
+				
 				echo '<span>';
 				echo '<a href="list.php?list_page=1&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> << </a>';
 				echo '</span>';
@@ -168,27 +175,27 @@ require_once 'process/paging.php';
 				echo '</span>';
 				
 				if($total_count < 1){
-    				    echo '<span>';
-    				    echo '<a href="">1</a>';
-    				    echo '</span>';
+				    echo '<span>';
+				    echo '<a href="">1</a>';
+				    echo '</span>';
 				}else{
 				    for ($i = 1; $i <= $total_page; $i++) {
-    				    echo '<span>';
-    				    echo '<a href=\'list.php?list_page='.$i.'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'\'" id="page'.$i.'">'.$i.'</a>';
-    				    echo '</span>';
-    				}
+				        echo '<span>';
+				        echo '<a href=\'list.php?list_page='.$i.'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'\'" id="page'.$i.'">'.$i.'</a>';
+				        echo '</span>';
+				    }
 				}
 				echo '<span>';
 				if($now_page != $total_page){
-    				echo '<a href="list.php?list_page='.($now_page + 1).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> > </a>';
+				    echo '<a href="list.php?list_page='.($now_page + 1).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> > </a>';
 				}else{
-	       			echo '<a href="list.php?list_page='.($now_page).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> > </a>';
+				    echo '<a href="list.php?list_page='.($now_page).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> > </a>';
 				}
 				echo '</span>';
 				echo '<span>';
 				echo '<a href="list.php?list_page='.($total_page).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> >> </a>';
 				echo '</span>';
-                ?>
+				?>
 			<div style="float: right;">
 				<button type="button" onclick="location.href='insert.php'">등록</button>
 			</div>

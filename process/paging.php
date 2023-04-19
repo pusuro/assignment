@@ -4,9 +4,7 @@
     $now_page = isset($_GET['list_page']) ? $_GET['list_page'] : 1; // 기본값 1
     $count_per_page = 10;
     
-    $total_count_query = con_query("SELECT COUNT(*) FROM information");
-    $total_count_array = mysqli_fetch_array($total_count_query);
-    $total_count = $total_count_array[0];
+    $total_count = '1';
     
     $total_page = ceil($total_count / $count_per_page);
     

@@ -163,7 +163,6 @@
               		$('#file_input').change(function(){
                     	var fileInput = $(this).val().replace("C:\\fakepath\\","");
                     	$('#file_output').val(fileInput);
-                    	alert(fileInput);
                   	});
                 });
     	</script>

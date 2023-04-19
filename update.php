@@ -117,7 +117,6 @@
           		$('#file_display').change(function(){
 	            	var fileDisplay = $(this).val().replace("C:\\fakepath\\","");
     	        	$('#file_output').val(fileDisplay);
-        	    	alert(fileDisplay);
               	});
 		
 				/* 첨부파일 삭제 ajax */
