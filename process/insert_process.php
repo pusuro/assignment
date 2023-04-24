@@ -53,6 +53,10 @@
         }
     }
 
+    var_dump($_POST['guest']);
+    
+    exit();
+    
     if($insert_query === FALSE){
         echo "insert 실패";
     }elseif ($_FILES['file_input']['error'] != 0 && empty($_POST['file_output']) == 0){

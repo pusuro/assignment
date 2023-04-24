@@ -41,7 +41,7 @@ require_once 'process/paging.php';
     } elseif (!empty($search_title)) {
         $search_title_query = con_query("$select_from WHERE info_title LIKE CONCAT('%','$search_title','%') $order_by LIMIT $start , $count_per_page");
     } elseif (!empty($search_name)) {
-        $search_name_query = con_query("$select_from WHERE info_title LIKE CONCAT('%','$search_name','%') $order_by LIMIT $start , $count_per_page");
+        $search_name_query = con_query("$select_from WHERE info_name LIKE CONCAT('%','$search_name','%') $order_by LIMIT $start , $count_per_page");
     } elseif (!empty($fir_date) && !empty($sec_date)) {
         $search_date_query = con_query("$select_from WHERE info_date >= '$fir_date' AND info_date <= '$sec_date' $order_by LIMIT $start , $count_per_page");
     } elseif (empty($search_title) && empty($search_name) && empty($fir_date) && empty($sec_date)) {
@@ -87,7 +87,7 @@ require_once 'process/paging.php';
                $where_clause = "WHERE info_date >= '$fir_date' AND info_date <= '$sec_date'";
                break;
            case $search_name_query:
-               $where_clause = "WHERE info_title LIKE CONCAT('%','$search_name','%')";
+               $where_clause = "WHERE info_name LIKE CONCAT('%','$search_name','%')";
                break;
            case $search_title_query:
                $where_clause = "WHERE info_title LIKE CONCAT('%','$search_title','%')";
@@ -127,10 +127,7 @@ require_once 'process/paging.php';
 				<th>조회수</th>
 			</tr>
 <?php
-        /* $check_list_query = con_query('SELECT info_num FROM information') */
         $check_list = mysqli_fetch_assoc($query_execute);
-        
-        /* $result_query = con_query("SELECT * FROM information ORDER BY info_num DESC LIMIT $start, $count_per_page"); */
     
         while ($border_list = mysqli_fetch_array($search_query_select)) {
     
@@ -181,7 +178,7 @@ require_once 'process/paging.php';
 				}else{
 				    for ($i = 1; $i <= $total_page; $i++) {
 				        echo '<span>';
-				        echo '<a href=\'list.php?list_page='.$i.'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'\'" id="page'.$i.'">'.$i.'</a>';
+				        echo '<a href="list.php?list_page='.$i.'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'" id="page'.$i.'">'.$i.'</a>';
 				        echo '</span>';
 				    }
 				}

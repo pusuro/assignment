@@ -24,16 +24,12 @@
     foreach ($max_num_query as $max_num);
 	
     if(empty($max_num['MAX(info_num)+1'])){
-?>
-				<input type="hidden" name="num" value="1">
-<?php 
+        echo '<input type="hidden" name="num" value="1">';
     }elseif (!empty($max_num['MAX(info_num)+1'])){
-?>
-				<input type="hidden" name="num" value="<?=$max_num['MAX(info_num)+1']?>">
-<?php 
+        echo '<input type="hidden" name="num" value="'.$max_num['MAX(info_num)+1'].'">';
     }
-?>	
-				<input type="hidden" name="date" value="<?=date("Y-m-d") ?>">
+?>
+			<input type="hidden" name="date" value="<?=date("Y-m-d") ?>">
 
         	<div id="insert_form">
         		<table id="input_area">
