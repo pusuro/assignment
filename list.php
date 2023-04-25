@@ -159,12 +159,11 @@ require_once 'process/paging.php';
 		</table>
 		<div id="move_page">
 				<?php
-				
 				echo '<span>';
 				echo '<a href="list.php?list_page=1&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> << </a>';
 				echo '</span>';
 				echo '<span>';
-				if($now_page == 1){
+				if($now_page <= 1 || $now_page == ''){
 				    echo '<a href="list.php?list_page='.($now_page).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> < </a>';
 				}else{
 				    echo '<a href="list.php?list_page='.($now_page - 1).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> < </a>';

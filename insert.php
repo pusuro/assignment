@@ -8,7 +8,7 @@
 	
     	<h1 id="jquery">등록</h1>
 		<hr>
-	
+
     	<form action="process/insert_process.php" method="POST" enctype="multipart/form-data">
 
 <?php 
@@ -63,13 +63,13 @@
         			<tr>
         				<td>고객 유형</td>
         				<td>
-        					<input type="checkbox" id="호스팅" value="호스팅" name="guest">
+        					<input type="checkbox" id="호스팅" value="호스팅" name="guest[]">
         					<label for="호스팅">호스팅</label>
-        					<input type="checkbox" id="유지보수" value="유지보수" name="guest">
+        					<input type="checkbox" id="유지보수" value="유지보수" name="guest[]">
         					<label for="유지보수">유지보수</label>
-        					<input type="checkbox" id="서버 임대" value="서버 임대" name="guest">
+        					<input type="checkbox" id="서버 임대" value="서버 임대" name="guest[]">
         					<label for="서버 임대">서버 임대</label>
-        					<input type="checkbox" id="기타" value="기타" name="guest">
+        					<input type="checkbox" id="기타" value="기타" name="guest[]">
         					<label for="기타">기타</label>
         				</td>
         			</tr>
@@ -130,7 +130,7 @@
 	     					return false;
 	     				}
 	    /* 고객 유형 체크 */
-	    				var td4Val = $('input[name=guest]:checked').val();
+	    				var td4Val = $('input[name=guest[]]:checked').val();
 	    				if(td4Val == undefined || td4Val == null || td4Val == ''){
 	     					alert(td4Val);
 	     					alert("유형을 체크 해주세요.");

@@ -19,6 +19,20 @@
 
     $load_val = mysqli_fetch_assoc($info_query);
 
+    $guest_arr = explode(',', $load_val['info_guest']);
+
+    $guest_arr_length = count($guest_arr);
+
+    for ($i = 0; $i < $guest_arr_length; $i++){
+        echo $guest_arr[$i]."<br>";
+    }
+    
+    /* 반복문을 돌려서 $i로 순서 함수 생성 후 값을 비교하면 어떻나?
+     * 너무 코드가 더러울거같다.
+     *  
+     *  */
+    
+    
     ?>
 
 <html>

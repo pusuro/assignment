@@ -5,13 +5,15 @@
     $mysql_pw = "assignment1";
 
     $con = mysqli_connect($mysql_host,$mysql_id,$mysql_pw,$mysql_db);
-
+    
+    $guest_arr = implode(',', $_POST['guest']);
+    
     $insertProcess = array(
                           'num' => mysqli_real_escape_string($con, $_POST['num']),
                           'name' => mysqli_real_escape_string($con, $_POST['name']),
                           'division' => mysqli_real_escape_string($con, $_POST['division']),
                           'cate' => mysqli_real_escape_string($con, $_POST['cate']),
-                          'guest' => mysqli_real_escape_string($con, $_POST['guest']),
+                          'guest' => mysqli_real_escape_string($con, $guest_arr),
                           'title' => mysqli_real_escape_string($con, $_POST['title']),
                           'content' => mysqli_real_escape_string($con, $_POST['content']),
                           'date' => mysqli_real_escape_string($con, $_POST['date'])
@@ -53,10 +55,6 @@
         }
     }
 
-    var_dump($_POST['guest']);
-    
-    exit();
-    
     if($insert_query === FALSE){
         echo "insert 실패";
     }elseif ($_FILES['file_input']['error'] != 0 && empty($_POST['file_output']) == 0){
