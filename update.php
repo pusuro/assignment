@@ -21,18 +21,6 @@
 
     $guest_arr = explode(',', $load_val['info_guest']);
 
-    $guest_arr_length = count($guest_arr);
-
-    for ($i = 0; $i < $guest_arr_length; $i++){
-        echo $guest_arr[$i]."<br>";
-    }
-    
-    /* 반복문을 돌려서 $i로 순서 함수 생성 후 값을 비교하면 어떻나?
-     * 너무 코드가 더러울거같다.
-     *  
-     *  */
-    
-    
     ?>
 
 <html>
@@ -78,14 +66,14 @@
             			<tr>
             				<td>고객 유형</td>
             				<td>
-            					<input type="checkbox" id="호스팅" value="호스팅" name="guest" <?php if ($load_val['info_guest'] == "호스팅") echo "checked";?>>
-            					<label for="호스팅">호스팅</label>
-            					<input type="checkbox" id="유지보수" value="유지보수" name="guest" <?php if ($load_val['info_guest'] == "유지보수") echo "checked";?>>
-            					<label for="유지보수">유지보수</label>
-            					<input type="checkbox" id="서버 임대" value="서버 임대" name="guest" <?php if ($load_val['info_guest'] == "서버 임대") echo "checked";?>>
-            					<label for="서버 임대">서버 임대</label>
-            					<input type="checkbox" id="기타" value="기타" name="guest" <?php if ($load_val['info_guest'] == "기타") echo "checked";?>>
-            					<label for="기타">기타</label>
+                                <?php
+                                $guest_options = array("호스팅", "유지보수", "서버 임대", "기타");
+                                foreach ($guest_options as $option) {
+                                    $checked = in_array($option, $guest_arr) ? "checked" : "";
+                                    echo '<input type="checkbox" id="'.$option.'" value="'.$option.'" name="guest[]" '.$checked.'>';
+                                    echo '<label for="'.$option.'">'.$option.'</label>';
+                                } 
+                                ?>
             				</td>
             			</tr>
             			<tr>
@@ -117,7 +105,7 @@
         		</table>
 
     			<div style="float: right;">
-    					<input type="hidden" name="update_num" value="<?=$load_val['info_num']?>">
+    					<input type="hidden" id="update_num" name="update_num" value="<?=$load_val['info_num']?>">
     					<button id="save" type="submit" >저장</button>
     					<button type="button" onclick="location.href='list.php'">취소</button>
 				</div>
@@ -153,7 +141,7 @@
  					return false;
  				}
 /* 고객 유형 체크 */
-				var td4Val = $('input[name=guest]:checked').val();
+				var td4Val = $('input[name=guest[]]:checked').val();
 				if(td4Val == undefined || td4Val == null || td4Val == ''){
  					alert(td4Val);
  					alert("유형을 체크 해주세요.");
@@ -187,16 +175,22 @@
 				/* 첨부파일 삭제 ajax */
               	$('#file_delete').click(function(){
           			var file_name = document.getElementById('file_name').innerHTML;
+          			var info_num = document.getElementById('update_num').value;
+          			alert(info_num);
           			
           			if(confirm("\"확인\" 버튼을 누르면 삭제가 진행됩니다.")){
               			$.ajax({
               					url : "./process/up_file_delete.php",
               					type : "POST",
-              					data : {file_name : file_name},
+              					data : {file_name : file_name,
+              							info_num : info_num},
                                 success: function(result) {
                                     alert(result);
                                     $('#file_name').hide();
                                     $('#file_delete').hide();
+                                },
+                                error : function(result){
+                                	alert("실패");
                                 }
               			});
               		}

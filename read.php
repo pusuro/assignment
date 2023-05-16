@@ -19,6 +19,8 @@
                                 file_manager.num IS NULL ");
     
     $read_val = mysqli_fetch_array($read_query);
+    
+    con_query("UPDATE information SET info_view=info_view+1 WHERE info_num= $list_num");   
 ?>
 
 <html>

@@ -1,12 +1,14 @@
 <?php
     require_once 'con_query_function.php';
-
+    
+    $POST_guest_arr = implode(',', $_POST['guest']);
+    
     $update_process = array(
                     'num' => mysqli_real_escape_string($con, $_POST['update_num']),
                     'name' => mysqli_real_escape_string($con, $_POST['name']),
                     'division' => mysqli_real_escape_string($con, $_POST['division']),
                     'cate' => mysqli_real_escape_string($con, $_POST['cate']),
-                    'guest' => mysqli_real_escape_string($con, $_POST['guest']),
+                    'guest' => mysqli_real_escape_string($con, $POST_guest_arr),
                     'title' => mysqli_real_escape_string($con, $_POST['title']),
                     'content' => mysqli_real_escape_string($con, $_POST['content']),
                     );
@@ -55,6 +57,8 @@
     
     if($update_query === FALSE){
         echo "update 실패";
+        echo mysqli_error($con);
+        echo mysqli_connect_error();
     }elseif ($_FILES['file_display']['error'] != 0 && empty($_POST['file_output']) == 0){
         echo "파일 저장에 문제가 발생했습니다.";
     }else{

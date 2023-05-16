@@ -98,6 +98,8 @@ require_once 'process/paging.php';
         
         $query_execute = con_query("$select_from $where_clause $order_by");
         $numCount_val = mysqli_num_rows($query_execute);
+        
+        var_dump($query_execute);
 ?>
     	<div id="check_page">
 			<span>Total : <?= $numCount_val ?></span>
@@ -134,7 +136,7 @@ require_once 'process/paging.php';
             echo '<tr>';
             echo '<td class="border_other">'.$border_list[0].'</td>';
             echo '<td class="border_other">'.$border_list[2].'</td>';
-            echo '<td class="border_title"><a href="read.php?list_num='.$border_list['0'].'">'.$border_list[5].'</a></td>';
+            echo '<td class="border_title"><a href="read.php?list_num='.$border_list[0].'" id="num_check" data-value="'.$border_list[0].'">'.$border_list[5].'</a></td>';
             
             /* 해당 게시물 번호에 파일이 저장돼있을시 첨부 열에 파일 이미지 표시 */
             $file_check = con_query("select file_name from file_manager where num='".$border_list['info_num']."'");
