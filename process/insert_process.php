@@ -6,7 +6,7 @@
 
     $con = mysqli_connect($mysql_host,$mysql_id,$mysql_pw,$mysql_db);
     
-    $guest_arr = implode(',', $_POST['guest']);
+    $guest_arr = isset($_POST['guest']) ? implode(',', $_POST['guest']) : '' ;
     
     $insertProcess = array(
                           'num' => mysqli_real_escape_string($con, $_POST['num']),

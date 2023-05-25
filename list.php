@@ -99,7 +99,6 @@ require_once 'process/paging.php';
         $query_execute = con_query("$select_from $where_clause $order_by");
         $numCount_val = mysqli_num_rows($query_execute);
         
-        var_dump($query_execute);
 ?>
     	<div id="check_page">
 			<span>Total : <?= $numCount_val ?></span>
@@ -115,9 +114,13 @@ require_once 'process/paging.php';
         }else {
             $now_page = isset($_GET['list_page']) ? $_GET['list_page'] : 1;
         }
+        if($now_page == 0){
+            $total_page = 1;
+        }
 ?>
-			<span>&nbsp Page : <?php echo $now_page."/".$total_page?></span>
+			<span>&nbsp Page : <?php echo $now_page."/".$total_page ?></span>
 		</div>
+		
 		<table id="LP">
 			<tr>
 				<th>번호</th>
@@ -159,40 +162,38 @@ require_once 'process/paging.php';
         }
 ?>
 		</table>
+		
+		<?php
+	    if($now_page == 0){
+	       $total_page = 1;
+	    }
+		?>
+		
 		<div id="move_page">
 				<?php
-				echo '<span>';
-				echo '<a href="list.php?list_page=1&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> << </a>';
-				echo '</span>';
+				echo '<span><a href="list.php?list_page=1&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> << </a></span>';
 				echo '<span>';
 				if($now_page <= 1 || $now_page == ''){
-				    echo '<a href="list.php?list_page='.($now_page).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> < </a>';
+				    echo '<a href="list.php?search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> < </a>';
 				}else{
 				    echo '<a href="list.php?list_page='.($now_page - 1).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> < </a>';
 				}
 				echo '</span>';
-				
 				if($total_count < 1){
-				    echo '<span>';
-				    echo '<a href="">1</a>';
-				    echo '</span>';
+				    echo '<span><a href="">1</a></span>';
 				}else{
 				    for ($i = 1; $i <= $total_page; $i++) {
-				        echo '<span>';
-				        echo '<a href="list.php?list_page='.$i.'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'" id="page'.$i.'">'.$i.'</a>';
-				        echo '</span>';
+				        echo '<span><a href="list.php?list_page='.$i.'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'" id="page'.$i.'">'.$i.'</a></span>';
 				    }
 				}
 				echo '<span>';
-				if($now_page != $total_page){
+				if($now_page != $total_page || $now_page == 0){
 				    echo '<a href="list.php?list_page='.($now_page + 1).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> > </a>';
 				}else{
 				    echo '<a href="list.php?list_page='.($now_page).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> > </a>';
 				}
 				echo '</span>';
-				echo '<span>';
-				echo '<a href="list.php?list_page='.($total_page).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> >> </a>';
-				echo '</span>';
+				echo '<span><a href="list.php?list_page='.($total_page).'&search_title='.$search_title.'&search_name='.$search_name.'&search_date_fir='.$fir_date.'&search_date_sec='.$sec_date.'"> >> </a></span>';
 				?>
 			<div style="float: right;">
 				<button type="button" onclick="location.href='insert.php'">등록</button>

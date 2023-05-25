@@ -1,7 +1,7 @@
 <?php
     require_once 'con_query_function.php';
     
-    $POST_guest_arr = implode(',', $_POST['guest']);
+    $POST_guest_arr = isset($_POST['guest']) ? implode(',', $_POST['guest']) : '' ;
     
     $update_process = array(
                     'num' => mysqli_real_escape_string($con, $_POST['update_num']),

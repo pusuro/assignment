@@ -140,13 +140,6 @@
  					alert("분류를 골라 주세요.")
  					return false;
  				}
-/* 고객 유형 체크 */
-				var td4Val = $('input[name=guest[]]:checked').val();
-				if(td4Val == undefined || td4Val == null || td4Val == ''){
- 					alert(td4Val);
- 					alert("유형을 체크 해주세요.");
- 					return false;
-				}
 /* 제목 체크 */
    				var td5Val = GetVal('td5');
    				if(td5Val == undefined || td5Val == null || td5Val == ''){
