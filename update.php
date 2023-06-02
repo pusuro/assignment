@@ -9,7 +9,7 @@
                                 LEFT JOIN
                                 file_manager
                                 ON
-                                    information.info_num = file_manager.num
+                                information.info_num = file_manager.num
                             WHERE
                                 file_manager.num = $update_num
                                 OR
@@ -169,7 +169,6 @@
               	$('#file_delete').click(function(){
           			var file_name = document.getElementById('file_name').innerHTML;
           			var info_num = document.getElementById('update_num').value;
-          			alert(info_num);
           			
           			if(confirm("\"확인\" 버튼을 누르면 삭제가 진행됩니다.")){
               			$.ajax({
